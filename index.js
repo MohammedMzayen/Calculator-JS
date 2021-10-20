@@ -8,6 +8,109 @@ var equation = 0;
 var numbers = [];
 var operations = [];
 
+//onkeyboard Clicks
+
+document.addEventListener("keydown",function(event){
+  console.log(event.key);
+  var id;
+  switch (event.key){
+    case "0":
+      id = "zero";
+      buttonAnimation(id);
+      anyNumberClick(0);
+      break;
+    case "1":
+      id = "one";
+      buttonAnimation(id);
+      anyNumberClick("1");
+      break;
+    case "2":
+      id = "two";
+      buttonAnimation(id);
+      anyNumberClick("2");
+      break;
+    case "3":
+      id = "three";
+      buttonAnimation(id);
+      anyNumberClick("3");
+      break;
+    case "4":
+      id = "four";
+      buttonAnimation(id);
+      anyNumberClick("4");
+      break;
+    case "5":
+      id = "five";
+      buttonAnimation(id);
+      anyNumberClick("5");
+      break;
+    case "6":
+      id = "six";
+      buttonAnimation(id);
+      anyNumberClick("6");
+      break;
+    case "7":
+      id = "seven";
+      buttonAnimation(id);
+      anyNumberClick("7");
+      break;
+    case "8":
+      id = "eight";
+      buttonAnimation(id);
+      anyNumberClick("8");
+      break;
+    case "9":
+      id = "nine";
+      buttonAnimation(id);
+      anyNumberClick("9");
+      break;
+    case "Backspace":
+      id = "del";
+      buttonAnimation(id);
+      deleteLast();
+      break;
+    case "+":
+      id = "add";
+      buttonAnimation(id);
+      anyNumberClick("+");
+      break;
+    case "-":
+      id = "sub";
+      buttonAnimation(id);
+      anyNumberClick("-");
+      break;
+    case "*":
+      id = "mult";
+      buttonAnimation(id);
+      anyNumberClick("*");
+      break;
+    case "/":
+      id = "divide";
+      buttonAnimation(id);
+      anyNumberClick("/");
+      break;
+      case "Escape":
+        id = "reset";
+        buttonAnimation(id);
+        reset();
+        break;
+      case "Enter":
+        id = "equal";
+        buttonAnimation(id);
+        calculateEquation();
+        break;
+      case ".":
+          id = "dot";
+          buttonAnimation(id);
+          anyNumberClick(".");
+          break;
+      default: ;
+        
+  }
+
+
+});
+
 //onClick = button
 document.querySelector("#equal").addEventListener("click", function () {
   calculateEquation();
@@ -15,19 +118,12 @@ document.querySelector("#equal").addEventListener("click", function () {
 
 //onClick del button
 document.querySelector("#del").addEventListener("click", function () {
-  console.log(lastInput(equation));
-  equation = removeLast(equation);
-  document.querySelector(".viewLabel").innerHTML = equation;
+  deleteLast();
 });
 
 // onClick reset button
 document.querySelector("#reset").addEventListener("click", function () {
-  equation = 0;
-  numbers = [];
-  // var1 = 0;
-  // var2 = 0;
-  // operation = 0;
-  document.querySelector(".viewLabel").innerHTML = equation;
+  reset();
 });
 
 //onClick number button
@@ -38,22 +134,7 @@ for (var i = 0; i < numberOfNumberButtons; i++) {
       var buttonInnerHTML = this.innerHTML;
       var buttonId = this.id;
       buttonAnimation(buttonId);
-      if (equation === 0) {
-        equation = buttonInnerHTML;
-      } else {
-        equation += buttonInnerHTML;
-      }
-
-      document.querySelector(".viewLabel").innerHTML = equation;
-      // if (operation != 0){
-      //     if (var2 ===0){
-      //         var2 = buttonInnerHTML;
-      //     }else{
-      //     var2 += buttonInnerHTML;
-      //     }
-      // }
-      // console.log(var1);
-      // console.log(var2);
+      anyNumberClick(buttonInnerHTML);
     });
 }
 
@@ -62,28 +143,12 @@ for (var i = 0; i < numberOfOperationButtons; i++) {
   document
     .querySelectorAll(".operation")
     [i].addEventListener("click", function () {
-      if (
-        lastInput(equation) == "+" ||
-        lastInput(equation) == "-" ||
-        lastInput(equation) == "*" ||
-        lastInput(equation) == "/"
-      ) {
-        equation = removeLast(equation);
-        document.querySelector(".viewLabel").innerHTML = equation;
-      }
+     
 
       var buttonInnerHTML = this.innerHTML;
       var buttonId = this.id;
       buttonAnimation(buttonId);
-      equation += "";
-      if (equation.substr(equation.length - 1) === ".") {
-        equation += "0";
-        document.querySelector(".viewLabel").innerHTML = equation;
-      }
-      // var1 = equation;
-      operation = buttonInnerHTML;
-      equation += operation;
-      document.querySelector(".viewLabel").innerHTML = equation;
+      anyOperationClick(buttonInnerHTML);
     });
 }
 
@@ -178,4 +243,58 @@ function lastInput(str) {
 
 function removeLast(str) {
   return str.slice(0, -1);
+}
+
+function deleteLast() {
+  equation = removeLast(equation);
+  document.querySelector(".viewLabel").innerHTML = equation;
+}
+
+function reset () {
+  equation = 0;
+  numbers = [];
+  // var1 = 0;
+  // var2 = 0;
+  // operation = 0;
+  document.querySelector(".viewLabel").innerHTML = equation;
+}
+
+function anyNumberClick(buttonInnerHTML){
+  if (equation === 0) {
+    equation = buttonInnerHTML;
+  } else {
+    equation += buttonInnerHTML;
+  }
+  document.querySelector(".viewLabel").innerHTML = equation;
+  // if (operation != 0){
+      //     if (var2 ===0){
+      //         var2 = buttonInnerHTML;
+      //     }else{
+      //     var2 += buttonInnerHTML;
+      //     }
+      // }
+      // console.log(var1);
+      // console.log(var2);
+}
+
+function anyOperationClick(buttonInnerHTML){
+  if (
+    lastInput(equation) == "+" ||
+    lastInput(equation) == "-" ||
+    lastInput(equation) == "*" ||
+    lastInput(equation) == "/"
+  ) {
+    equation = removeLast(equation);
+    document.querySelector(".viewLabel").innerHTML = equation;
+  }
+  equation += "";
+      if (equation.substr(equation.length - 1) === ".") {
+        equation += "0";
+        document.querySelector(".viewLabel").innerHTML = equation;
+      }
+      // var1 = equation;
+      operation = buttonInnerHTML;
+      equation += operation;
+      document.querySelector(".viewLabel").innerHTML = equation;
+
 }
