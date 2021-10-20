@@ -88,12 +88,8 @@ button{
 
   @media (max-width: 790px) {
     .fullcalc{
-        margin: 10% 18%;
+        margin: 10% 0;
     }
   }
 
-  @media (max-width: 352px) {
-    .fullcalc{
-        margin: 10% 8%;
-    }
   }
